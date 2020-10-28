@@ -5,7 +5,8 @@ jdk:
 addons:
  sonarcloud:
   organization: "docdoc23"
-  token: "45ec4e7c132bab42a7fe5e20ef0d7d7c3ea2f6ce"
+  token:
+    secure: "45ec4e7c132bab42a7fe5e20ef0d7d7c3ea2f6ce"
 
 script:
 - ant build
