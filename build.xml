@@ -3,24 +3,21 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="HelloWorld">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="HW">
     <property environment="env"/>
-    <property name="src.link" value="../../Desktop/progetto_ispw/trunk/src"/>
-    <property name="JRE_LIB" value="../../../../Program Files/Java/jre1.8.0_231/lib/rt.jar"/>
     <property name="ECLIPSE_HOME" value="D:/java-2019-09/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="C:Users/stefa/Desktop/progetto_ispw/trunk/bin.libraryclasspath"/>
-    <path id="HelloWorld.classpath">
+    <path id="HW.classpath">
         <pathelement location="bin"/>
-        <pathelement location="${JRE_LIB}"/>
-        <path refid="C:Users/stefa/Desktop/progetto_ispw/trunk/bin.libraryclasspath"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="${src.link}">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.xtend"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -34,8 +31,8 @@
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="${src.link}"/>
-            <classpath refid="HelloWorld.classpath"/>
+            <src path="src"/>
+            <classpath refid="HW.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -51,5 +48,10 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
+    </target>
+    <target name="HW">
+        <java classname="HW" failonerror="true" fork="yes">
+            <classpath refid="HW.classpath"/>
+        </java>
     </target>
 </project>
